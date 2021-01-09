@@ -1,6 +1,6 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="MainProcess" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="2154,2710.66666666667" sap2010:WorkflowViewState.IdRef="MainProcess_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="MainProcess" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="2154,4652" sap2010:WorkflowViewState.IdRef="MainProcess_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="58">
+    <scg:List x:TypeArguments="x:String" Capacity="31">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -35,7 +35,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="18">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="25">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -54,191 +54,328 @@
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="MainProcess" sap:VirtualizedContainerService.HintSize="568,2646" sap2010:WorkflowViewState.IdRef="Sequence_1">
-    <Sequence.Variables>
-      <Variable x:TypeArguments="s:DateTime" Name="LastDate" />
-      <Variable x:TypeArguments="x:String" Name="CsvFilePath" />
-      <Variable x:TypeArguments="x:String" Name="LastDateStr" />
-    </Sequence.Variables>
+  <Sequence DisplayName="Entire process" sap:VirtualizedContainerService.HintSize="686.666666666667,4587.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_6">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence DisplayName="Initialize" sap:VirtualizedContainerService.HintSize="526,1134.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_2">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="x:String" Name="GetLastDateQuery" />
-        <Variable x:TypeArguments="x:String" Name="VisionQ_URL" />
-        <Variable x:TypeArguments="x:String" Name="LastDay" />
-        <Variable x:TypeArguments="x:String" Name="LastMonth" />
-        <Variable x:TypeArguments="x:String" Name="LastYear" />
-        <Variable x:TypeArguments="sd:DataTable" Name="LastDateTbl" />
-      </Sequence.Variables>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-      <Assign sap2010:Annotation.AnnotationText="Query via View, excludes Today() as last date if applicable (to avoid part day consumption data)" DisplayName="Get last date in DB" sap:VirtualizedContainerService.HintSize="484,124" sap2010:WorkflowViewState.IdRef="Assign_1">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[GetLastDateQuery]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">SELECT * FROM last_date</InArgument>
-        </Assign.Value>
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </Assign>
-      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ConnectHerokuPostgresql workflow" sap:VirtualizedContainerService.HintSize="484,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Components\ConnectHerokuPostgresql.xaml">
-        <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="x:String" x:Key="in_QueryString">
-            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="GetLastDateQuery" />
-          </InArgument>
-          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_QueryResult">
-            <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="LastDateTbl" />
-          </OutArgument>
-        </ui:InvokeWorkflowFile.Arguments>
-      </ui:InvokeWorkflowFile>
-      <Assign DisplayName="Last Date in DB ex Today" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_2">
-        <Assign.To>
-          <OutArgument x:TypeArguments="s:DateTime">[LastDate]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="s:DateTime">[Datetime.Parse(LastDateTbl.Rows(0).Item("last_date").ToString)]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Assign TEST" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_11">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[LastDateStr]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[LastDate.ToString("yyy-MM-dd HH:mm:ss")]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="484,62.6666666666667" sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="[(Date.Now - LastDate).Days.ToString]" />
-      <If Condition="[(Date.Now - LastDate).Days &lt; 2]" sap:VirtualizedContainerService.HintSize="484,214" sap2010:WorkflowViewState.IdRef="If_1" />
-      <Assign sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_3">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[VisionQ_URL]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">https://app.visionq.cz/device.php?id=781</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Assign Download File Path" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_7">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[CsvFilePath]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">Temp\Download.csv</InArgument>
-        </Assign.Value>
-      </Assign>
-    </Sequence>
-    <Sequence DisplayName="Process Data" sap:VirtualizedContainerService.HintSize="526,1379.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="sd:DataTable" Name="VisionqData" />
-        <Variable x:TypeArguments="sd:DataTable" Name="WorkingData" />
-        <Variable x:TypeArguments="sd:DataTable" Name="DailyConsumption" />
-        <Variable x:TypeArguments="x:String" Name="ColumnHighRateName" />
-        <Variable x:TypeArguments="x:String" Name="ColumnLowRateName" />
-      </Sequence.Variables>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="353.333333333333,52.6666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_1">
-        <ui:CommentOut.Body>
-          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,206" sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="644.666666666667,4495.33333333333" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <Sequence DisplayName="MainProcess" sap:VirtualizedContainerService.HintSize="606,4234" sap2010:WorkflowViewState.IdRef="Sequence_1">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="s:DateTime" Name="LastDate" />
+            <Variable x:TypeArguments="x:String" Name="CsvFilePath" />
+            <Variable x:TypeArguments="x:String" Name="LastDateStr" />
+            <Variable x:TypeArguments="x:String" Name="ColumnHighRateName" />
+            <Variable x:TypeArguments="x:String" Name="ColumnLowRateName" />
+            <Variable x:TypeArguments="sd:DataTable" Name="DailyConsumption" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Initialize" sap:VirtualizedContainerService.HintSize="564,1520" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="GetLastDateQuery" />
+              <Variable x:TypeArguments="x:String" Name="VisionQ_URL" />
+              <Variable x:TypeArguments="x:String" Name="LastDay" />
+              <Variable x:TypeArguments="x:String" Name="LastMonth" />
+              <Variable x:TypeArguments="x:String" Name="LastYear" />
+              <Variable x:TypeArguments="sd:DataTable" Name="LastDateTbl" />
+              <Variable x:TypeArguments="x:String" Name="Dnes" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap2010:Annotation.AnnotationText="Query via View, excludes Today() as last date if applicable (to avoid part day consumption data)" DisplayName="Get last date in DB" sap:VirtualizedContainerService.HintSize="522,124" sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[GetLastDateQuery]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">SELECT * FROM last_date</InArgument>
+              </Assign.Value>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </Assign>
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ConnectHerokuPostgresql workflow" sap:VirtualizedContainerService.HintSize="522,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Components\ConnectHerokuPostgresql.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_QueryString">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="GetLastDateQuery" />
+                </InArgument>
+                <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_QueryResult">
+                  <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="LastDateTbl" />
+                </OutArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Query">
+                  <Literal x:TypeArguments="x:String">Yes</Literal>
+                </InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <Assign DisplayName="Last Date in DB ex Today" sap:VirtualizedContainerService.HintSize="522,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+              <Assign.To>
+                <OutArgument x:TypeArguments="s:DateTime">[LastDate]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="s:DateTime">[Datetime.Parse(LastDateTbl.Rows(0).Item("last_date").ToString)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Assign TEST" sap:VirtualizedContainerService.HintSize="522,62" sap2010:WorkflowViewState.IdRef="Assign_11">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[LastDateStr]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[LastDate.ToString("yyy-MM-dd HH:mm:ss")]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If sap2010:Annotation.AnnotationText="The Last day starts at D-1 at 00.0, therefore data interval must include also the Last day, therefore limit is 2 days (1 last and 1 new excluding Today)" Condition="[(Date.Now - LastDate).Days &lt; 2]" DisplayName="If Data not older than 1 Day" sap:VirtualizedContainerService.HintSize="522,448" sap2010:WorkflowViewState.IdRef="If_1">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="Log and Exit" sap:VirtualizedContainerService.HintSize="376,248.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;No New Data to be processed&quot;]" />
+                  <Throw DisplayName="Throw Business Exception" Exception="[New BusinessRuleException(&quot;No New data to process&quot;)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                </Sequence>
+              </If.Then>
+            </If>
+            <Assign sap:VirtualizedContainerService.HintSize="522,62" sap2010:WorkflowViewState.IdRef="Assign_3">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[VisionQ_URL]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">https://app.visionq.cz/device.php?id=781</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Assign Download File Path" sap:VirtualizedContainerService.HintSize="522,62" sap2010:WorkflowViewState.IdRef="Assign_7">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[CsvFilePath]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">Temp\Download.csv</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If Condition="[File.Exists(CsvFilePath)]" DisplayName="If Download File Exists" sap:VirtualizedContainerService.HintSize="522,214" sap2010:WorkflowViewState.IdRef="If_2">
+              <If.Then>
+                <ui:Delete ContinueOnError="{x:Null}" DisplayName="Delete File" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Delete_1" Path="[CsvFilePath]" />
+              </If.Then>
+            </If>
+          </Sequence>
+          <Sequence DisplayName="Process Data" sap:VirtualizedContainerService.HintSize="564,1683.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="sd:DataTable" Name="VisionqData" />
+              <Variable x:TypeArguments="sd:DataTable" Name="WorkingData" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GetVisionqData workflow" sap:VirtualizedContainerService.HintSize="353.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Components\GetVisionqData.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_DownloadPath">[CsvFilePath]</InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <ui:ReadCsvFile Encoding="{x:Null}" DataTable="[VisionqData]" Delimitator="Comma" DisplayName="Read CSV" FilePath="[CsvFilePath]" sap:VirtualizedContainerService.HintSize="353.333333333333,156.666666666667" sap2010:WorkflowViewState.IdRef="ReadCsvFile_1" />
+            <Assign DisplayName="Create Working Data Datatable" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_8">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[WorkingData]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[VisionqData.Clone]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Change Date" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_9">
+              <Assign.To>
+                <OutArgument x:TypeArguments="s:Type">[WorkingData.Columns("date").DataType]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="s:Type">[GetType(system.DateTime)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Filter Date" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_10">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[WorkingData]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[VisionqData.Select("[date] &gt; '" + LastDateStr +"'").CopyToDataTable]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Extract High Rate Column Name" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_12">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[ColumnHighRateName]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[WorkingData.Columns.Item(1).ColumnName.ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Extract Low Rate Column Name" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_13">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[ColumnLowRateName]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[WorkingData.Columns.Item(2).ColumnName.ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CalculateDailyConsumption workflow" sap:VirtualizedContainerService.HintSize="353.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Components\CalculateDailyConsumption.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="sd:DataTable" x:Key="in_WorkingTable">[WorkingData]</InArgument>
+                <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_DailyConsumption">[DailyConsumption]</OutArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_HighRateColumnName">[ColumnHighRateName]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_LowRateColumnName">[ColumnLowRateName]</InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <InvokeMethod sap2010:Annotation.AnnotationText="Remove first row as it is foms only base for caclulation of the following rows" DisplayName="Invoke Rows(0).Delete Method" sap:VirtualizedContainerService.HintSize="353.333333333333,199.333333333333" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="Delete">
+              <InvokeMethod.TargetObject>
+                <InArgument x:TypeArguments="sd:DataRow">[DailyConsumption.Rows(0)]</InArgument>
+              </InvokeMethod.TargetObject>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </InvokeMethod>
+            <Assign sap2010:Annotation.AnnotationText="Excludes today from Daily COnsumption table as there is no way to filter it out at source and data is obviously incomplete for today." DisplayName="Exclude Today From Daily Consumption" sap:VirtualizedContainerService.HintSize="353.333333333333,140.666666666667" sap2010:WorkflowViewState.IdRef="Assign_15">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[DailyConsumption]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[DailyConsumption.Select("[date] &lt;&gt; '" + Today.ToString +"'").CopyToDataTable]</InArgument>
+              </Assign.Value>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </Assign>
+            <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[DailyConsumption]" Delimitator="Comma" DisplayName="Write CSV" FilePath="Temp\DailyConsumption.csv" sap:VirtualizedContainerService.HintSize="353.333333333333,156.666666666667" sap2010:WorkflowViewState.IdRef="WriteCsvFile_3" />
+          </Sequence>
+          <Sequence DisplayName="Output Data" sap:VirtualizedContainerService.HintSize="564,858.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_7">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GetVisionqData workflow" sap:VirtualizedContainerService.HintSize="334,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Components\GetVisionqData.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_DownloadPath">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="CsvFilePath" />
-                </InArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
+            <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[DailyConsumption]" DisplayName="For Each Row in Daily Consumption" sap:VirtualizedContainerService.HintSize="438.666666666667,766.666666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Upload to DB" sap:VirtualizedContainerService.HintSize="388,614" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="UploadDate" />
+                      <Variable x:TypeArguments="x:String" Name="UploadTotal" />
+                      <Variable x:TypeArguments="x:String" Name="UploadDayCons" />
+                      <Variable x:TypeArguments="x:String" Name="UploadQuery" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign DisplayName="Assign DateTime Datatype" sap:VirtualizedContainerService.HintSize="346,62" sap2010:WorkflowViewState.IdRef="Assign_17">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[UploadDate]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[Datetime.Parse(row.Item("date").ToString).ToString("yyyy-MM-dd")]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="Assign LowRate Cons" sap:VirtualizedContainerService.HintSize="346,62" sap2010:WorkflowViewState.IdRef="Assign_18">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[UploadTotal]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[row.Item("Total").ToString]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="Assign LowRate Cons" sap:VirtualizedContainerService.HintSize="346,62" sap2010:WorkflowViewState.IdRef="Assign_19">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[UploadDayCons]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[Convert.ToDecimal(row.Item("DailyConsumption")).ToString("f")]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap:VirtualizedContainerService.HintSize="346,62" sap2010:WorkflowViewState.IdRef="Assign_20">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[UploadQuery]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">["INSERT INTO day_cons( item_date, total, day_cons) VALUES ('" + UploadDate +"'::DATE," + UploadTotal + "," + UploadDayCons +")"]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ConnectHerokuPostgresql workflow" sap:VirtualizedContainerService.HintSize="346,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Components\ConnectHerokuPostgresql.xaml">
+                      <ui:InvokeWorkflowFile.Arguments>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_QueryString">
+                          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="UploadQuery" />
+                        </InArgument>
+                        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_QueryResult" />
+                        <InArgument x:TypeArguments="x:String" x:Key="in_Query">
+                          <Literal x:TypeArguments="x:String">No</Literal>
+                        </InArgument>
+                      </ui:InvokeWorkflowFile.Arguments>
+                    </ui:InvokeWorkflowFile>
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+            </ui:ForEachRow>
           </Sequence>
-        </ui:CommentOut.Body>
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </ui:CommentOut>
-      <ui:ReadCsvFile Encoding="{x:Null}" DataTable="[VisionqData]" Delimitator="Comma" DisplayName="Read CSV" FilePath="[CsvFilePath]" sap:VirtualizedContainerService.HintSize="353.333333333333,156.666666666667" sap2010:WorkflowViewState.IdRef="ReadCsvFile_1" />
-      <Assign DisplayName="Create Working Data Datatable" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_8">
-        <Assign.To>
-          <OutArgument x:TypeArguments="sd:DataTable">[WorkingData]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="sd:DataTable">[VisionqData.Clone]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Change Date" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_9">
-        <Assign.To>
-          <OutArgument x:TypeArguments="s:Type">[WorkingData.Columns("date").DataType]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="s:Type">[GetType(system.DateTime)]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Filter Date" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_10">
-        <Assign.To>
-          <OutArgument x:TypeArguments="sd:DataTable">[WorkingData]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="sd:DataTable">[VisionqData.Select("[date] &gt; '" + LastDateStr +"'").CopyToDataTable]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Extract High Rate Column Name" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_12">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[ColumnHighRateName]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[WorkingData.Columns.Item(1).ColumnName.ToString]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Extract Low Rate Column Name" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_13">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[ColumnLowRateName]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[WorkingData.Columns.Item(2).ColumnName.ToString]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CalculateDailyConsumption workflow" sap:VirtualizedContainerService.HintSize="353.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Components\CalculateDailyConsumption.xaml">
-        <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_WorkingTable">
-            <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="WorkingData" />
-          </InArgument>
-          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_DailyConsumption">
-            <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="DailyConsumption" />
-          </OutArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_HighRateColumnName">
-            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="ColumnHighRateName" />
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_LowRateColumnName">
-            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="ColumnLowRateName" />
-          </InArgument>
-        </ui:InvokeWorkflowFile.Arguments>
-      </ui:InvokeWorkflowFile>
-      <InvokeMethod DisplayName="Invoke Method" sap:VirtualizedContainerService.HintSize="353.333333333333,137.333333333333" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="Delete">
-        <InvokeMethod.TargetObject>
-          <InArgument x:TypeArguments="sd:DataRow">[DailyConsumption.Rows(0)]</InArgument>
-        </InvokeMethod.TargetObject>
-      </InvokeMethod>
-      <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[DailyConsumption]" Delimitator="Comma" DisplayName="Write CSV" FilePath="Temp\DailyConsumption.csv" sap:VirtualizedContainerService.HintSize="353.333333333333,156.666666666667" sap2010:WorkflowViewState.IdRef="WriteCsvFile_2" />
-    </Sequence>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="610.666666666667,22" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="ui:BusinessRuleException">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="NoData" />
+            </ActivityAction.Argument>
+          </ActivityAction>
+        </Catch>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="610.666666666667,22" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <ui:LogMessage DisplayName="Log System Exc Message" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Error" Message="[exception.Message + &quot;, &quot; + exception.Source]" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
   </Sequence>
 </Activity>
