@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="MainProcess" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="2154,4652" sap2010:WorkflowViewState.IdRef="MainProcess_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="MainProcess" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="2154,4714" sap2010:WorkflowViewState.IdRef="MainProcess_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="31">
       <x:String>System.Activities</x:String>
@@ -63,15 +63,15 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Entire process" sap:VirtualizedContainerService.HintSize="686.666666666667,4587.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_6">
+  <Sequence DisplayName="Entire process" sap:VirtualizedContainerService.HintSize="686.666666666667,4649.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_6">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="644.666666666667,4495.33333333333" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="644.666666666667,4557.33333333333" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <Sequence DisplayName="MainProcess" sap:VirtualizedContainerService.HintSize="606,4234" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <Sequence DisplayName="MainProcess" sap:VirtualizedContainerService.HintSize="606,4296" sap2010:WorkflowViewState.IdRef="Sequence_1">
           <Sequence.Variables>
             <Variable x:TypeArguments="s:DateTime" Name="LastDate" />
             <Variable x:TypeArguments="x:String" Name="CsvFilePath" />
@@ -116,15 +116,9 @@
             </Assign>
             <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ConnectHerokuPostgresql workflow" sap:VirtualizedContainerService.HintSize="522,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Components\ConnectHerokuPostgresql.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_QueryString">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="GetLastDateQuery" />
-                </InArgument>
-                <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_QueryResult">
-                  <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="LastDateTbl" />
-                </OutArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_Query">
-                  <Literal x:TypeArguments="x:String">Yes</Literal>
-                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_QueryString">[GetLastDateQuery]</InArgument>
+                <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_QueryResult">[LastDateTbl]</OutArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Query">Yes</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <Assign DisplayName="Last Date in DB ex Today" sap:VirtualizedContainerService.HintSize="522,62" sap2010:WorkflowViewState.IdRef="Assign_2">
@@ -183,7 +177,7 @@
               </If.Then>
             </If>
           </Sequence>
-          <Sequence DisplayName="Process Data" sap:VirtualizedContainerService.HintSize="564,1683.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Process Data" sap:VirtualizedContainerService.HintSize="564,1745.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <Sequence.Variables>
               <Variable x:TypeArguments="sd:DataTable" Name="VisionqData" />
               <Variable x:TypeArguments="sd:DataTable" Name="WorkingData" />
@@ -199,6 +193,7 @@
                 <InArgument x:TypeArguments="x:String" x:Key="in_DownloadPath">[CsvFilePath]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
+            <Delay Duration="00:00:05" sap:VirtualizedContainerService.HintSize="353.333333333333,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
             <ui:ReadCsvFile Encoding="{x:Null}" DataTable="[VisionqData]" Delimitator="Comma" DisplayName="Read CSV" FilePath="[CsvFilePath]" sap:VirtualizedContainerService.HintSize="353.333333333333,156.666666666667" sap2010:WorkflowViewState.IdRef="ReadCsvFile_1" />
             <Assign DisplayName="Create Working Data Datatable" sap:VirtualizedContainerService.HintSize="353.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_8">
               <Assign.To>
@@ -331,13 +326,9 @@
                     </Assign>
                     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ConnectHerokuPostgresql workflow" sap:VirtualizedContainerService.HintSize="346,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Components\ConnectHerokuPostgresql.xaml">
                       <ui:InvokeWorkflowFile.Arguments>
-                        <InArgument x:TypeArguments="x:String" x:Key="in_QueryString">
-                          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="UploadQuery" />
-                        </InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_QueryString">[UploadQuery]</InArgument>
                         <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_QueryResult" />
-                        <InArgument x:TypeArguments="x:String" x:Key="in_Query">
-                          <Literal x:TypeArguments="x:String">No</Literal>
-                        </InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_Query">No</InArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                     </ui:InvokeWorkflowFile>
                   </Sequence>
